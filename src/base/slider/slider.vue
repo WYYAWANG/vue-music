@@ -31,13 +31,11 @@ export default {
       default: 3000
     }
   },
-  mounted() {
+  mounted: function() {
     setTimeout(() => {
       this._setSliderWidth()
-      this._initSlider()
-      
+      this._initSlider()     
     }, 20) // 延时保障dom渲染完成，浏览器刷新通常是17毫秒一次，这里也可以用this.$nextTick
-
   },
   methods: {
     _setSliderWidth(isResize) {
@@ -53,11 +51,12 @@ export default {
         child.style.width = sliderWidth + "px"
         width += sliderWidth
       }
-      if (this.loop && !isResize) {
+      if (this.loop) {
         // 如果是循环切换并且没有重新改变窗口大小 （在初始化BScroll时会克隆两个dom，故得加上 2 * sliderWidth ）
         width += 2 * sliderWidth
       }
       this.$refs.sliderGroup.style.width = width + "px"
+      console.log(this.$refs.sliderGroup.style.width)
     },
     _initSlider() {
       // 初始化slider

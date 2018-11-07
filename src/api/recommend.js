@@ -7,9 +7,9 @@ export function getRecommend() {
   // Object.assign()用于合并对象，返回一个新的对象
   const data = Object.assign({}, commonParams, {
     platform: 'h5',
-    uni: 0,
+    uni: 1534995542,
     needNewCode: 1
   })
-
+  //返回一个promise
   return jsonp(url, data, options)
 }
