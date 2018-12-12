@@ -5,7 +5,7 @@ import {commonParams, options} from './config'
 export function getRecommend() {
   const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
   // Object.assign()用于合并对象，返回一个新的对象
-  const data = Object.assign({}, commonParams, {
+  const data = Object.assign(commonParams, {
     platform: 'h5',
     uni: 1534995542,
     needNewCode: 1

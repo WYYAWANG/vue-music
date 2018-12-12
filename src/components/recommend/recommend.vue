@@ -1,8 +1,9 @@
 <template>
     <div class="recommend-content">
-        <div  class="slider-wrappper" v-if="recommends.length">
+        <div v-if="recommends.length" class="slider-wrappper">
             <slider>
-                <div v-for="item in recommends">
+                <!-- slot -->
+                <div v-for="item of recommends" :key="item.key">
                     <a :href="item.linkUrl">
                         <img :src="item.picUrl">
                     </a>
@@ -31,6 +32,7 @@ export default {
     this._getRecommend()
   },
   methods: {
+    // 获取数据
     _getRecommend() {
       getRecommend().then(res => {
         if (res.code === ERR_OK) {
