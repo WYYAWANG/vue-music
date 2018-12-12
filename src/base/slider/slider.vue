@@ -121,6 +121,10 @@ export default {
         this.slider.goToPage(pageIndex, 0, 400);
       }, this.interval);
     }
+  },
+  // 优化：在desytroyed生命周期时将资源清理，释放内存
+  destroyed() {
+    clearTimeout(this.timer)
   }
 };
 </script>
