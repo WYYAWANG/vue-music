@@ -17,7 +17,7 @@
           <ul>
             <li v-for="item in discList" class="item">
               <div class="icon">
-                <img :src="item.imgurl" width="60" height="60">
+                <img v-lazy="item.imgurl" width="60" height="60">
               </div>
               <div class="text">
                 <h2 class="name" v-html="item.creator.name"></h2>
@@ -27,6 +27,9 @@
           </ul>
         </div>
       </div>
+      <div class="loading-container" v-show="!discList.length">
+        <loading></loading>
+      </div>
     </Scroll>
   </div>
 </template>
@@ -34,6 +37,7 @@
 <script type="text/ecmascript-6">
 import Scroll from "base/scroll/scroll";
 import Slider from "base/slider/slider";
+import Loading from "base/loading/loading";
 import { getRecommend, getDiscList } from "api/recommend";
 import { ERR_OK } from "api/config";
 
@@ -46,7 +50,11 @@ export default {
   },
   created() {
     this._getRecommend();
-    this._getDiscList();
+
+    setTimeout(()=> {
+       this._getDiscList();
+    },1000)
+   
   },
   methods: {
     // 获取数据
@@ -73,7 +81,8 @@ export default {
   },
   components: {
     Slider,
-    Scroll
+    Scroll,
+    Loading
   }
 };
 </script>
