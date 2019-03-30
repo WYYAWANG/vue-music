@@ -1,6 +1,7 @@
 <template>
     <div class="singer">
-      <list-view :data="singers"></list-view>
+      <list-view :data="singers" @select="selectSinger"></list-view>
+      <router-view></router-view>
     </div>
 </template>
 
@@ -9,6 +10,7 @@ import {getSingerList} from 'api/singer'
 import {ERR_OK} from 'api/config'
 import Singer from 'common/js/singer'
 import ListView from 'base/listview/listview'
+import {mapMutations} from 'vuex'  // vuex提供的语法糖,对Mutations进行一层封装
 
 const HOT_SINGER_LEN = 10
 const HOT_NAME = '热门'
@@ -23,6 +25,12 @@ export default {
     this._getSingerList()
   },
   methods: {
+    selectSinger(singer){
+      this.$router.push({
+        path: `/singer/${singer.id}`
+      })
+      this.setSinger(singer) // 等于执行了mutations.js里的对应方法
+    },
     //获取歌手列表
     _getSingerList() {
       getSingerList().then((res) => {
@@ -77,7 +85,11 @@ export default {
         return a.title.charCodeAt(0) - b.title.charCodeAt(0)
       })
       return hot.concat(ret)
-    }
+    },
+    // 对象映射(把对mutations的修改映射成一个方法名 setSinger)
+    ...mapMutations({
+      setSinger: 'SET_SINGER'
+    })
   },
   components: {
     ListView
